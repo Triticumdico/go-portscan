@@ -7,11 +7,13 @@ import (
 )
 
 func main() {
-	p := 5432
-	conn, err := net.Dial("tcp", fmt.Sprintf("localhost:%d", p))
-	if err != nil {
-		log.Fatalf("%d CLOSED (%s)\n", p, err)
+	for i := 5000; i <= 5500; i++ {
+		conn, err := net.Dial("tcp", fmt.Sprintf("localhost:%d", i))
+		if err != nil {
+			log.Printf("%d CLOSED (%s)\n", i, err)
+			continue
+		}
+		conn.Close()
+		log.Printf("%d OPEN\n", i)
 	}
-	conn.Close()
-	log.Printf("%d OPEN\n", p)
 }
